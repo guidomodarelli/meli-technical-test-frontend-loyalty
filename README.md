@@ -1,73 +1,92 @@
-# React + TypeScript + Vite
+# **🧪 Prueba Técnica Frontend**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🎯 Descripción
 
-Currently, two official plugins are available:
+Desarrollar una aplicación en **React** que consuma la API pública [**Rick and Morty API**](https://rickandmortyapi.com/) para mostrar información sobre los personajes de la serie.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+La aplicación debe incluir:
 
-## React Compiler
+* Una funcionalidad para **marcar personajes como favoritos**.
+* Una sección dedicada para **visualizar los favoritos**.
+* **Persistencia de datos**, garantizando que los favoritos se mantengan al recargar la página.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## ⚙️ Requisitos Funcionales
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 👥 Lista de Personajes
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Mostrar una **lista paginada** de personajes obtenidos desde:
+🔗 [https://rickandmortyapi.com/api/character](https://rickandmortyapi.com/api/character)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Cada tarjeta de personaje debe contener:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+* 🧍 **Nombre**
+* 🖼️ **Imagen**
+* 💀 **Estado:** vivo, muerto o desconocido
+* 👽 **Especie**
+* ⭐ **Botón** para agregar o eliminar de favoritos
+
+---
+
+### ⭐ Favoritos
+
+* Permitir marcar personajes como **favoritos** directamente desde la lista principal.
+* Incluir una **página exclusiva** (`/favorites`) que muestre solo los personajes favoritos.
+* Garantizar la **persistencia** de los favoritos al actualizar o cerrar la aplicación.
+
+---
+
+### 🔍 Filtrado y Búsqueda
+
+Incluir herramientas para mejorar la exploración de personajes:
+
+* Filtros por:
+
+  * **Estado:** vivo, muerto o desconocido.
+  * **Especie.**
+* **Barra de búsqueda** para localizar personajes por nombre.
+
+---
+
+### 📄 Paginación
+
+Implementar la **paginación** utilizando el parámetro `page` que ofrece la API, para navegar entre conjuntos de personajes.
+
+---
+
+## 🧰 Requisitos Técnicos
+
+### 🧩 TypeScript *(opcional)*
+
+Si se utiliza, deben tiparse todos los **componentes**, **props**, **estados** y demás elementos del proyecto.
+
+### 🔄 Gestión de Estado
+
+Implementar un sistema de **gestión de estado global** para controlar:
+
+* Los personajes marcados como favoritos.
+* Los filtros y parámetros de búsqueda.
+
+### 🧱 HTML Semántico
+
+Usar etiquetas semánticas como:
+
+```html
+<header>, <main>, <section>, <article>
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 🎨 CSS / SCSS
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+El diseño es **libre**, pero debe cumplir con las siguientes condiciones:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+* **Responsivo**, adaptado a distintos dispositivos.
+* Interfaz **clara y ordenada**.
+
+### 🗺️ Enrutamiento
+
+Configurar las rutas principales mediante **React Router**:
+1️⃣ `/` → Lista de personajes
+2️⃣ `/favorites` → Lista de personajes favoritos
+
+También se debe incluir una ruta para manejar **errores 404** o páginas inexistentes.
