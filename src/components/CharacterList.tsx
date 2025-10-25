@@ -28,27 +28,47 @@ const CharacterList = () => {
     min: 1,
   })
 
-  if (loading) return <p>Cargando...</p>
-  if (err) return <p>Error: {err.message}</p>
+  if (loading) {
+    return <p className="text-center text-sm text-muted-foreground">Cargando personajes...</p>
+  }
+
+  if (err) {
+    return (
+      <p className="text-center text-sm text-destructive">
+        Error: {err.message}
+      </p>
+    )
+  }
 
   return (
-    <section>
-      <h1>Personajes</h1>
+    <section className="space-y-6">
+      <div className="flex flex-col gap-2">
+        <h1 className="text-3xl font-semibold tracking-tight">Personajes</h1>
+        <p className="text-sm text-muted-foreground">
+          Explora la lista de personajes y marca tus favoritos.
+        </p>
+      </div>
 
       <FiltersBar />
 
-      <section style={{ display: 'grid', gap: 12 }}>
-        {list?.map((character) => (
-          <CharacterCard
-            key={character.id}
-            name={character.name}
-            image={character.image}
-            state={character.status}
-            specie={character.species}
-            isFavorite={favorites.includes(character.id)}
-            toggleFavorite={() => toggleFavorite(character.id)}
-          />
-        ))}
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {list?.length ? (
+          list.map((character) => (
+            <CharacterCard
+              key={character.id}
+              name={character.name}
+              image={character.image}
+              state={character.status}
+              specie={character.species}
+              isFavorite={favorites.includes(character.id)}
+              toggleFavorite={() => toggleFavorite(character.id)}
+            />
+          ))
+        ) : (
+          <p className="col-span-full text-center text-sm text-muted-foreground">
+            No se encontraron personajes con los filtros actuales.
+          </p>
+        )}
       </section>
 
       <Pagination
