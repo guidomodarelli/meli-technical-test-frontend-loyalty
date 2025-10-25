@@ -6,10 +6,10 @@ interface UseCharactersProps {
   page?: number
   name?: string
   status?: Status
-  specie?: string
+  species?: string
 }
 
-const useCharacters = ({ page = 1, name, status, specie }: UseCharactersProps) => {
+const useCharacters = ({ page = 1, name, status, species }: UseCharactersProps) => {
   const [characters, setCharacters] = React.useState<CharacterAPI[]>([])
   const [error, setError] = useState<Error | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -20,7 +20,7 @@ const useCharacters = ({ page = 1, name, status, specie }: UseCharactersProps) =
     const fetchCharacters = debounce(async () => {
       try {
         setIsLoading(true)
-        const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}${name ? `&name=${name}` : ''}${status ? `&status=${status}` : ''}${specie ? `&species=${specie}` : ''}`)
+        const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}${name ? `&name=${name}` : ''}${status ? `&status=${status}` : ''}${species ? `&species=${species}` : ''}`)
         const data = (await response.json()) as APIInfo
         setHasNext(!!data.info.next)
         setHasPrev(!!data.info.prev)
@@ -35,7 +35,7 @@ const useCharacters = ({ page = 1, name, status, specie }: UseCharactersProps) =
     }, 500)
 
     fetchCharacters()
-  }, [page, name, status, specie])
+  }, [page, name, status, species])
 
   return { characters, error, isLoading, hasNext, hasPrev }
 }

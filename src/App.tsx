@@ -1,21 +1,31 @@
 import './App.css'
 import CharacterList from "./components/CharacterList"
-import { FavoriteContext, useFavorites } from "./contexts/useFavorites"
-import {BrowserRouter, Route, Routes} from "react-router"
+import FavoritesCharacterList from "./components/FavoritesCharacterList"
+import { FavoritesProvider } from "./contexts/useFavorites"
+import { FiltersProvider } from "./contexts/useFilters"
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom"
 
 function App() {
-  const {favorites, addFavorite, removeFavorite, toggleFavorite } = useFavorites()
-
   return (
-    <FavoriteContext.Provider value={{favorites, addFavorite, removeFavorite, toggleFavorite}}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<CharacterList />} />
-          <Route path="/favorites" element={<CharacterList onlyFavs />} />
-          <Route path="*" element={<p>Not Found</p>} />
-        </Routes>
-      </BrowserRouter>
-    </FavoriteContext.Provider>
+    <FavoritesProvider>
+      <FiltersProvider>
+        <BrowserRouter>
+          <header>
+            <nav style={{ display: 'flex', gap: 12, padding: 12 }}>
+              <Link to="/">Personajes</Link>
+              <Link to="/favorites">Favoritos</Link>
+            </nav>
+          </header>
+          <main>
+            <Routes>
+              <Route path="/" element={<CharacterList />} />
+              <Route path="/favorites" element={<FavoritesCharacterList />} />
+              <Route path="*" element={<p>Not Found</p>} />
+            </Routes>
+          </main>
+        </BrowserRouter>
+      </FiltersProvider>
+    </FavoritesProvider>
   )
 }
 
